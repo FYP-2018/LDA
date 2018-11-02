@@ -41,39 +41,6 @@ def LDA(lda_model):
     vis = pyLDAvis.gensim.prepare(lda_model, corpus, id2word)
     pyLDAvis.show(vis)
 
-def MallotLDA(coherence_model_ldamallet):
-    coherence_ldamallet = coherence_model_ldamallet.get_coherence()
-
-    print('\nCoherence Score: ', coherence_ldamallet)
-
-def compute_coherence_values(dictionary, corpus, texts, limit, start=2, step=3):
-    """
-    Compute c_v coherence for various number of topics
-
-    Parameters:
-    ----------
-    dictionary : Gensim dictionary
-    corpus : Gensim corpus
-    texts : List of input texts
-    limit : Max num of topics
-
-    Returns:
-    -------
-    model_list : List of LDA topic models
-    coherence_values : Coherence values corresponding to the LDA model with respective number of topics
-    """
-    coherence_values = []
-    model_list = []
-    for num_topics in range(start, limit, step):
-        model = gensim.models.wrappers.LdaMallet(mallet_path, corpus=corpus, num_topics=num_topics, id2word=id2word)
-        model_list.append(model)
-        coherencemodel = CoherenceModel(model=model, texts=texts, dictionary=dictionary, coherence='c_v')
-        coherence_values.append(coherencemodel.get_coherence())
-
-    return model_list, coherence_values
-
-
-
 
 if __name__ ==  '__main__':
 
@@ -189,33 +156,3 @@ if __name__ ==  '__main__':
                                                per_word_topics=True)
 
     LDA(lda_model)
-
-    # # Download File: http://mallet.cs.umass.edu/dist/mallet-2.0.8.zip
-    # os.environ['MALLET_HOME'] = 'E:\\FYP-code\\rebecca-LDAcode\\mallet-2.0.8'
-    # mallet_path = "E:\\FYP-code\\rebecca-LDAcode\\mallet-2.0.8\\bin\\mallet"  # update this path
-    # ldamallet = gensim.models.wrappers.LdaMallet(mallet_path, corpus=corpus, num_topics=20, id2word=id2word)
-    #
-    # # Show Topics
-    # print(ldamallet.show_topics(formatted=False))
-    #
-    # # Compute Coherence Score
-    # coherence_model_ldamallet = CoherenceModel(model=ldamallet,
-    #                                            texts=data_lemmatized,
-    #                                            dictionary=id2word,
-    #                                            coherence='c_v')
-    # MallotLDA(coherence_model_ldamallet)
-
-    # model_list, coherence_values = compute_coherence_values(dictionary=id2word, corpus=corpus, texts=data_lemmatized,
-    #                                                         start=2, limit=40, step=6)
-    #
-    # # Show graph
-    # limit = 40;
-    # start = 2;
-    # step = 6;
-    # x = range(start, limit, step)
-    # plt.plot(x, coherence_values)
-    # plt.xlabel("Num Topics")
-    # plt.ylabel("Coherence score")
-    # plt.legend(("coherence_values"), loc='best')
-    # plt.show()
-
