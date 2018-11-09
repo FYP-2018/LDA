@@ -15,4 +15,4 @@ uncomment pyLDAvis.show(vis) in LDA(lda_model) function if want to see the visua
  
  5. LDA_mallet_find_topic.py  there are 2 things achieved in this file:  finding the topic of each doc  finding the most representative doc in each topic in the form of pandas.df
 
-*remainging problems:  coherence score continues to grow when increasing #of topic
+*remaining problems:  coherence score continues to grow when increasing #of topic
